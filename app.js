@@ -1,7 +1,21 @@
+document.getElementById("search-field").addEventListener("keypress", function (event) {
+    console.log(event.key);
+    if (event.key === 'Enter'){
+        document.getElementById("search-button").click();
+
+    }
+});
+
+
+
+
+
+
 const searchSongs = async () => {
     const searchText = document.getElementById('search-field').value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
     // load data 
+    toggleSPinner();
     fetch(url)
         .then(response => response.json())
         .then(songs => displaySongs(songs.data))
@@ -41,6 +55,7 @@ const displaySongs = songs => {
         `;
         songsContainer.appendChild(songDiv);
     });
+    toggleSPinner();
 }
 
 
@@ -73,3 +88,25 @@ const displayError = error => {
     const errorTag = document.getElementById('error-message');
     errorTag.innerText = error;
 }
+
+
+
+const toggleSPinner = () => {
+    const spinner = document.getElementById('loading-spinner');
+    const songs = document.getElementById('song-container');
+    // if(show){
+    //     spinner.classList.remove('d-none');
+    // }
+    // else{
+    //     spinner.classList.add('d-none');
+    // }
+    // console.log(spinner.classList);
+
+
+    spinner.classList.toggle('d-none');
+    songs.classList.toggle('d-none');
+}
+
+
+
+
